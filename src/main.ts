@@ -190,7 +190,13 @@ process.once('SIGTERM', exitHandler)
 process.once('SIGUSR1', exitHandler)
 process.once('SIGUSR2', exitHandler)
 
-cron.schedule('0 0 */1 * * *', run, {
+const CRON_EXPRESSION = process.env.CRON_EXPRESSION
+if (!CRON_EXPRESSION || !cron.validate(CRON_EXPRESSION)) {
+  debug('无效的定时表达式：', CRON_EXPRESSION)
+  process.exit(1)
+}
+
+cron.schedule(CRON_EXPRESSION, run, {
   scheduled: true,
   timezone: 'Asia/Shanghai'
 })
