@@ -174,6 +174,9 @@ async function run () {
     looping = true
     await loop()
   } finally {
+    debug('循环体完成')
+    if (cursor <= 0) cursor = 1
+    writeCursorData(cursor, lastTotalPages)
     looping = false
   }
 }
