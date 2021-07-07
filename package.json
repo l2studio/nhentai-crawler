@@ -1,0 +1,41 @@
+{
+  "name": "@l2studio/nhentai-crawler",
+  "version": "0.1.0",
+  "description": "A nhentai book crawler microservice",
+  "repository": "https://github.com/l2studio/nhentai-crawler.git",
+  "author": "lgou2w <lgou2w@hotmail.com>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "dev": "cross-env DEBUG='lgou2w:*' NODE_ENV=development ts-node -T -P tsconfig.json src/index.ts",
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "@l2studio/nhentai-api": "^0.2.6",
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.2",
+    "dotenv": "^10.0.0",
+    "mongoose": "^5.13.2",
+    "node-cron": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.20.15",
+    "@types/node-cron": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "eslint": "^7.30.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5"
+  }
+}
