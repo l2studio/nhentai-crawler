@@ -1,0 +1,110 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.7.6
+          run_install: true
+
+      - name: ESLint check
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+  publish-docker:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract tag name
+        shell: bash
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        id: extract_tag
+
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: ${{ secrets.DOCKER_REGISTRY }}/nhentai-crawler:${{ steps.extract_tag.outputs.tag }}
+
+  release:
+    needs: [build, publish-docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Fetch all history
+          fetch-depth: 0
+
+      - name: Generate Changelog
+        id: changelog
+        shell: bash
+        env:
+          CURRENT: ${{ github.ref }}
+        # Special thanks to this post on Stack Overflow regarding change set between two tags:
+        # https://stackoverflow.com/questions/12082981
+        # Do note that actions/checkout will enter detach mode by default, so you won't have
+        # access to HEAD ref. Use GitHub-Action-supplied `github.ref` instead.
+        # Special thanks to this issue ticket regarding escaping newline:
+        # https://github.com/actions/create-release/issues/25
+        # We use Bash parameter expansion to do find-and-replace.
+        # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+        # Also we cannot use git rev-list because it always prepend "commit <hash>"
+        # See https://stackoverflow.com/questions/36927089/
+        run: |
+          current_tag=${CURRENT/refs\/tags\//}
+          last_tag=`git describe --tags --abbrev=0 "$current_tag"^ 2>/dev/null || echo`
+          if [ $last_tag ]; then
+          changelog=`git log --pretty="format:%H: %s" ${last_tag}..$current_tag`
+          else
+          changelog=`git log --pretty="format:%H: %s"`
+          fi
+          changelog="${changelog//'%'/'%25'}"
+          changelog="${changelog//$'\n'/'  %0A'}"
+          echo "::set-output name=value::Change set since ${last_tag:-the beginning}:  %0A%0A$changelog"
+      - name: GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_PUBLISH }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body: |
+            ${{ steps.changelog.outputs.value }}
