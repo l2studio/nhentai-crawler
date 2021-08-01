@@ -1,8 +1,8 @@
-FROM node:12-alpine
+FROM node:14-alpine
 MAINTAINER lgou2w <lgou2w@hotmail.com>
 
 RUN apk add --no-cache curl
-RUN curl -f https://get.pnpm.io/v6.7.js | node - add --global pnpm
+RUN curl -f https://get.pnpm.io/v6.js | node - add --global pnpm
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml /app/
