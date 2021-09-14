@@ -6,7 +6,7 @@ import cron from 'node-cron'
 import path from 'path'
 import fs from 'fs'
 
-const debug = require('debug')('lgou2w:nhentai-crawer')
+const debug = require('debug')('lgou2w:nhentai-crawler')
 const nhentai = new NHentaiAPI({
   proxy: process.env.PROXY_HOST && process.env.PROXY_PORT
     ? { host: process.env.PROXY_HOST, port: parseInt(process.env.PROXY_PORT) }
