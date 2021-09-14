@@ -40,6 +40,7 @@ const BookSchema = new Schema<BookDocument>({
     cover: { type: String, required: true },
     pages: [{ type: String, required: true }]
   },
+  // @ts-ignore
   tags: {
     type: [Schema.Types.ObjectId],
     required: true,
