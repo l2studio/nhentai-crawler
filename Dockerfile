@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 MAINTAINER lgou2w <lgou2w@hotmail.com>
 
 RUN apk add --no-cache curl
