@@ -17,11 +17,11 @@
     "lint:fix": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@l2studio/nhentai-api": "^0.2.7",
+    "@l2studio/nhentai-api": "^0.2.8",
     "cross-env": "^7.0.3",
-    "debug": "^4.3.3",
-    "dotenv": "^12.0.0",
-    "mongoose": "^6.1.6",
+    "debug": "^4.3.4",
+    "dotenv": "^12.0.4",
+    "mongoose": "^6.3.5",
     "node-cron": "^3.0.0"
   },
   "devDependencies": {
