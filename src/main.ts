@@ -10,7 +10,9 @@ const debug = require('debug')('lgou2w:nhentai-crawler')
 const nhentai = new NHentaiAPI({
   proxy: process.env.PROXY_HOST && process.env.PROXY_PORT
     ? { host: process.env.PROXY_HOST, port: parseInt(process.env.PROXY_PORT) }
-    : undefined
+    : undefined,
+  userAgent: process.env.USER_AGENT,
+  cookie: process.env.COOKIE
 })
 
 const runDir = path.resolve(__dirname)
