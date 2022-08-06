@@ -32,4 +32,4 @@ const TagSchema = new Schema<TagDocument>({
   }
 })
 
-export default model<TagDocument>('tags', TagSchema)
+export default model<TagDocument>('ovo_book_tags', TagSchema)

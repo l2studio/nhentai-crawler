@@ -15,7 +15,7 @@ export interface BookDocument extends Document {
     pages: string[]
   },
   tags: Types.ObjectId[]
-  uploadDate: number
+  uploadDate: Date
   pages: number
 }
 
@@ -45,12 +45,11 @@ const BookSchema = new Schema<BookDocument>({
     type: [Schema.Types.ObjectId],
     required: true,
     index: true,
-    ref: 'tags'
+    ref: 'ovo_book_tags'
   },
   uploadDate: {
-    type: Number,
-    required: true,
-    index: true
+    type: Date,
+    required: true
   },
   pages: {
     type: Number,
@@ -58,4 +57,4 @@ const BookSchema = new Schema<BookDocument>({
   }
 })
 
-export default model<BookDocument>('books', BookSchema)
+export default model<BookDocument>('ovo_books', BookSchema)

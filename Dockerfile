@@ -1,8 +1,7 @@
 FROM node:16-alpine
 MAINTAINER lgou2w <lgou2w@hotmail.com>
 
-RUN apk add --no-cache curl
-RUN curl -f https://get.pnpm.io/v6.js | node - add --global pnpm
+RUN npm install --location=global pnpm@^7
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml /app/
