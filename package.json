@@ -1,6 +1,6 @@
 {
   "name": "@l2studio/nhentai-crawler",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A nhentai book crawler microservice",
   "repository": "https://github.com/l2studio/nhentai-crawler.git",
   "author": "lgou2w <lgou2w@hotmail.com>",
