@@ -71,7 +71,7 @@ async function saveBook (g: Gallery): Promise<BookDocument> {
     title: g.title,
     images: { thumb, cover, pages },
     tags,
-    uploadDate: new Date(g.upload_date),
+    uploadDate: new Date(g.upload_date * 1000),
     pages: g.num_pages
   }).save()
   return book
