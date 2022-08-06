@@ -19,6 +19,7 @@ specifiers:
   rimraf: ^3.0.2
   ts-node: ^10.9.1
   typescript: ^4.7.4
+  uuid: ^8.3.2
 
 dependencies:
   '@l2studio/nhentai-api': 0.2.8
@@ -27,6 +28,7 @@ dependencies:
   dotenv: 16.0.1
   mongoose: 6.5.1
   node-cron: 3.0.1
+  uuid: 8.3.2
 
 devDependencies:
   '@types/node': 16.11.47
@@ -1932,6 +1934,11 @@ packages:
     dependencies:
       punycode: 2.1.1
     dev: true
+
+  /uuid/8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}

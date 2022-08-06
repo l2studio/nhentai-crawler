@@ -22,7 +22,8 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.1",
     "mongoose": "^6.5.1",
-    "node-cron": "^3.0.1"
+    "node-cron": "^3.0.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.47",
